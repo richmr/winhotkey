@@ -31,10 +31,7 @@ def run(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
             break
         keys_to_add[key] = phrase
 
-    print(keys_to_add)
-
     for (n, (key_to_add, phrase)) in enumerate(keys_to_add.items()):
-        print(key_to_add, phrase)
         keyboard.add_hotkey(key_to_add, keyboard.write, args=phrase)
     
     print("Press ESC to exit.  Leave this window open!")
