@@ -25,13 +25,14 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "click",
+  "typer[all]",
+  "keyboard"
 ]
 
 [project.urls]
-Documentation = "https://github.com/unknown/winhotkey#readme"
-Issues = "https://github.com/unknown/winhotkey/issues"
-Source = "https://github.com/unknown/winhotkey"
+Documentation = "https://github.com/richmr/winhotkey#readme"
+Issues = "https://github.com/richmr/winhotkey/issues"
+Source = "https://github.com/richmr/winhotkey"
 
 [project.scripts]
 winhotkey = "winhotkey.cli:winhotkey"
