@@ -10,6 +10,7 @@ from winhotkey.__about__ import __version__
 
 cli_app = typer.Typer()
 
+
 @cli_app.command()
 def run(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "ctrl+alt",
         reverse_hotkey_order: Annotated[bool, typer.Option(help="Start with 1 and go to 0 or 0 and go to 1.  I actually prefer 0 to 1")] = True,
@@ -30,8 +31,11 @@ def run(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
             break
         keys_to_add[key] = phrase
 
+    print(keys_to_add)
+
     for (n, (key_to_add, phrase)) in enumerate(keys_to_add.items()):
-        keyboard.add_hotkey(key_to_add, lambda: keyboard.write(phrase)) 
+        print(key_to_add, phrase)
+        keyboard.add_hotkey(key_to_add, keyboard.write, args=phrase)
     
     print("Press ESC to exit.  Leave this window open!")
 
