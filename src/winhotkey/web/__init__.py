@@ -17,12 +17,19 @@ with importlib.resources.path('winhotkey', 'web') as web_path:
 api_app.mount(f"/static", StaticFiles(directory=static_path), name="static")
 
 current_hotkeys = {}
-def initializeHotkeys(hotkey_prefix):
+type_delay = 2.0
+def initializeSettings(
+        hotkey_prefix,
+        delay_in_seconds
+    ):
     global current_hotkeys
+    global type_delay
     possible_entries = [f"{i}" for i in range(1,10)]
     possible_entries.append("0")
     possible_entries = possible_entries[::-1]
     current_hotkeys = {f"{hotkey_prefix}+{num}":None for num in possible_entries}
+    
+    type_delay = delay_in_seconds
 
 @api_app.get("/")
 def home():
@@ -71,7 +78,7 @@ def set_hotkey(hot_key: HotKey):
 
 @api_app.get("/type_phrase")
 def type_phrase(assigned_key: str = Query(description="The assigned hot key to activate"), 
-                delay:float = Query(default=2.0, description="The time in seconds we will wait before we begin typing")
+                delay:float = Query(default=type_delay, description="The time in seconds we will wait before we begin typing")
 ):
     """
     Will type the assigned key after the delay in seconds.  This is to allow you to put focus on the correct window if the hot keys are not working in that window.

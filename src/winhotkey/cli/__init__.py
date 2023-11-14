@@ -43,13 +43,14 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     keyboard.wait('shift+ctrl+alt+esc')
 
 @cli_app.command()
-def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt"):
+def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
+        type_delay: Annotated[float, typer.Option(help="Set the delay time in seconds when using the delayed typing feature")] = 2.0):
     """
     Starts a web interface to configure winhotkey
     """
-    from winhotkey.web import initializeHotkeys
-    initializeHotkeys(hotkey_prefix)
-    
+    from winhotkey.web import initializeSettings
+    initializeSettings(hotkey_prefix, type_delay)
+
     config = Config("winhotkey.web:api_app", host="127.0.0.1", port=17455, reload=True)
     server = ThreadedUvicorn(config)
     server.start()
