@@ -12,7 +12,7 @@ cli_app = typer.Typer()
 
 
 @cli_app.command()
-def run(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "ctrl+alt",
+def run(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
         reverse_hotkey_order: Annotated[bool, typer.Option(help="Start with 1 and go to 0 or 0 and go to 1.  I actually prefer 0 to 1")] = True,
         hide_input: Annotated[bool, typer.Option(help="In case your 'phrases' are sensitive, you will not see what you enter")] = True):
     """
@@ -32,12 +32,12 @@ def run(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
         keys_to_add[key] = phrase
 
     for (n, (key_to_add, phrase)) in enumerate(keys_to_add.items()):
-        keyboard.add_hotkey(key_to_add, keyboard.write, args=phrase)
+        keyboard.add_hotkey(key_to_add, keyboard.write, args=(phrase,))
     
-    print("Press ESC to exit.  Leave this window open!")
+    print("Press SHIFT+CTRL+ALT+ESC to exit.  Leave this window open!")
 
     # Blocks until you press esc.
-    keyboard.wait('esc')
+    keyboard.wait('shift+ctrl+alt+esc')
 
 def winhotkey():
     if not platform.system() == "Windows":
