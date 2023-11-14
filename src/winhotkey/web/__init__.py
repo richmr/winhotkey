@@ -6,14 +6,41 @@ from pydantic import BaseModel, Field
 from winhotkey.dummy_keyboard import keyboard # For testing on mac
 from time import sleep
 from typing import Annotated
+import importlib
 
 api_app = FastAPI()
-api_app.mount(f"/static", StaticFiles(directory="static"), name="static")
 
-possible_entries = [f"{i}" for i in range(1,10)]
-possible_entries.append("0")
-possible_entries = possible_entries[::-1]
-current_hotkeys = {f"ctrl+alt+{num}":None for num in possible_entries}
+static_path = None
+with importlib.resources.path('winhotkey', 'web') as web_path:
+    static_path = web_path/"static"
+
+api_app.mount(f"/static", StaticFiles(directory=static_path), name="static")
+
+current_hotkeys = {}
+def initializeHotkeys(hotkey_prefix):
+    global current_hotkeys
+    possible_entries = [f"{i}" for i in range(1,10)]
+    possible_entries.append("0")
+    possible_entries = possible_entries[::-1]
+    current_hotkeys = {f"{hotkey_prefix}+{num}":None for num in possible_entries}
+
+@api_app.get("/")
+def home():
+    """
+    Redirect to the main page
+    """
+    tosend = """
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta http-equiv="refresh" content="1; url='./static/pages/home.html'" />
+            </head>
+            <body>
+                <p>Redirecting to main menu</p>
+            </body>
+        </html>
+    """
+    return HTMLResponse(tosend)
 
 @api_app.get("/hotkeys")
 def get_hotkeys():
@@ -55,7 +82,4 @@ def type_phrase(assigned_key: str = Query(description="The assigned hot key to a
         keyboard.write(phrase)
     
     return {}
-
-
-
 
