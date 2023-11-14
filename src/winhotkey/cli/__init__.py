@@ -59,8 +59,8 @@ def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     server.stop()
 
 def winhotkey():
-    # if not platform.system() == "Windows":
-    #     print("This will only work on windows, sorry")
-    #     return
+    if not platform.system() == "Windows":
+        print("This will only work on windows, sorry")
+        return
     cli_app()
 
