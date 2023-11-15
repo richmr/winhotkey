@@ -24,3 +24,7 @@ class keyboard:
         print(f"Would wait until {key} pressed.  Will need Ctrl-C to quit")
         while True:
             sleep(0.05)
+
+    @classmethod
+    def send(self, key):
+        print(f"Would send {key}")
