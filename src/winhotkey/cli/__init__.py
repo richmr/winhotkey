@@ -14,13 +14,25 @@ from winhotkey.ThreadedUvicorn import ThreadedUvicorn
 
 cli_app = typer.Typer()
 
-def typePhrase(phrase:str):
+shift_list = '~!@#$%^&*()_+{}|:"<>?QWERTYUIOPLKJHGFDSAZXCVBNM'
+
+def sender(phrase, delay=3.0):
     """
     Will type the phrase by breaking phrase into indiv characters and using keyboard.send()
     """
-    sleep(1)
+    sleep(delay)
     for c in phrase:
+        if c in shift_list:
+            # Since using .send() I have to detect characters that are on the "shift" side of the key and send the shift with it
+            # Assumes caps lock is off
+            c = "shift+" + c.lower()
         keyboard.send(c)
+
+def typePhrase(phrase:str):    
+    sleep(4)
+    for c in phrase:
+        print(f"Sending {c}")
+        keyboard.write(c)
 
 @cli_app.command()
 def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
@@ -45,7 +57,7 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     for (n, (key_to_add, phrase)) in enumerate(keys_to_add.items()):
         # Convert the phrase to string of characters separated by comma
         # keyboard.add_hotkey(key_to_add, keyboard.write, args=(phrase,))
-        keyboard.add_hotkey(key_to_add, typePhrase, args=(phrase,))
+        keyboard.add_hotkey(key_to_add, sender, args=(phrase,3.0,))
     
     print("Press SHIFT+CTRL+ALT+ESC to exit.  Leave this window open!")
 
