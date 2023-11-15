@@ -37,7 +37,7 @@ function loadHotkeys() {
             });
         },
         error: function( jqXHR, textStatus, errorThrown ) {
-            message = `loadHoteys failed because ${errorThrown}`;
+            message = `loadHotkeys failed because ${errorThrown}`;
             console.log(message);
         }
     });
