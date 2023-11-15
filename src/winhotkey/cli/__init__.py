@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 import typer
-import keyboard
-#from winhotkey.dummy_keyboard import keyboard # For testing on mac
+# import keyboard
+from winhotkey.dummy_keyboard import keyboard # For testing on mac
 from typing_extensions import Annotated
 import platform
 from uvicorn.config import Config
@@ -42,7 +42,7 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     # Blocks until you press esc.
     keyboard.wait('shift+ctrl+alt+esc')
 
-#@cli_app.command()
+@cli_app.command()
 def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
         type_delay: Annotated[float, typer.Option(help="Set the delay time in seconds when using the delayed typing feature")] = 2.0):
     """
@@ -59,8 +59,8 @@ def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     server.stop()
 
 def winhotkey():
-    if not platform.system() == "Windows":
-        print("This will only work on windows, sorry")
-        return
+    # if not platform.system() == "Windows":
+    #     print("This will only work on windows, sorry")
+    #     return
     cli_app()
 

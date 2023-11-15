@@ -2,8 +2,8 @@ from fastapi import FastAPI, Query, HTTPException, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
-import keyboard
-#from winhotkey.dummy_keyboard import keyboard # For testing on mac
+# import keyboard
+from winhotkey.dummy_keyboard import keyboard # For testing on mac
 from time import sleep
 from typing import Annotated
 import importlib
