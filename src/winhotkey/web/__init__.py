@@ -41,8 +41,6 @@ def initializeSettings(
         hkey = f"{hotkey_prefix}+{num}"
         current_hotkeys[hkey] = HotKey(index=index, assigned_key=hkey, phrase="")
     
-    # test
-    current_hotkeys["shift+ctrl+alt+6"].phrase = 'Pass"word'
     type_delay = delay_in_seconds
 
 @api_app.get("/")
