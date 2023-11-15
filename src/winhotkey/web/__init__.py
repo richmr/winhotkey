@@ -41,6 +41,8 @@ def initializeSettings(
         hkey = f"{hotkey_prefix}+{num}"
         current_hotkeys[hkey] = HotKey(index=index, assigned_key=hkey, phrase="")
     
+    # test
+    current_hotkeys["shift+ctrl+alt+6"].phrase = 'Pass"word'
     type_delay = delay_in_seconds
 
 @api_app.get("/")
@@ -61,7 +63,7 @@ def home():
     """
     return HTMLResponse(tosend)
 
-@api_app.get("/hotkeys")
+@api_app.get("/api/hotkeys")
 def get_hotkeys() -> List[HotKey]:
     """
     Returns list of current hotkeys in display order.
@@ -70,7 +72,7 @@ def get_hotkeys() -> List[HotKey]:
     hkeys = sorted(hkeys, key=lambda hkey: hkey.index)
     return hkeys
 
-@api_app.post("/hotkeys")
+@api_app.post("/api/hotkeys")
 def set_hotkey(hot_key: HotKey):
     """
     Will assign (or reassign) hot key
@@ -86,7 +88,7 @@ def set_hotkey(hot_key: HotKey):
     current_hotkeys[hot_key.assigned_key] = hot_key.phrase
     return {}
 
-@api_app.get("/type_phrase")
+@api_app.get("/api/type_phrase")
 def type_phrase(assigned_key: str = Query(description="The assigned hot key to activate"), 
                 delay:float = Query(default=type_delay, description="The time in seconds we will wait before we begin typing")
 ):
