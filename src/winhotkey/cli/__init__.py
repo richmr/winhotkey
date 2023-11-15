@@ -7,12 +7,20 @@ import keyboard
 from typing_extensions import Annotated
 import platform
 from uvicorn.config import Config
+from time import sleep
 
 from winhotkey.__about__ import __version__
 from winhotkey.ThreadedUvicorn import ThreadedUvicorn
 
 cli_app = typer.Typer()
 
+def typePhrase(phrase:str):
+    """
+    Will type the phrase by breaking phrase into indiv characters and using keyboard.send()
+    """
+    sleep(1)
+    for c in phrase:
+        keyboard.send(c)
 
 @cli_app.command()
 def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
@@ -35,7 +43,9 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
         keys_to_add[key] = phrase
 
     for (n, (key_to_add, phrase)) in enumerate(keys_to_add.items()):
-        keyboard.add_hotkey(key_to_add, keyboard.write, args=(phrase,))
+        # Convert the phrase to string of characters separated by comma
+        # keyboard.add_hotkey(key_to_add, keyboard.write, args=(phrase,))
+        keyboard.add_hotkey(key_to_add, typePhrase, args=(phrase,))
     
     print("Press SHIFT+CTRL+ALT+ESC to exit.  Leave this window open!")
 
