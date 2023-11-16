@@ -11,7 +11,7 @@ function activateDelayTypeButton(button_id) {
         $.toast({ 
             text : "Your phrase will type when this toast closes.\nPut focus on the target input box", 
             showHideTransition : 'slide',  // It can be plain, fade or slide
-            bgColor : 'red',              // Background color for toast
+            bgColor : 'green',              // Background color for toast
             textColor : '#eee',            // text color
             allowToastClose : false,       // Show the close button or not
             hideAfter : 3000,              // `false` to make it sticky or time in miliseconds to hide after
