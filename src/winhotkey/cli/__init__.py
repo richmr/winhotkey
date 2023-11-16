@@ -60,8 +60,8 @@ def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     config = Config("winhotkey.web:api_app", host="127.0.0.1", port=17455, reload=True)
     server = ThreadedUvicorn(config)
     server.start()
-    print("Press CTRL+C to exit.  Leave this window open!")
-    keyboard.wait('ctrl+c')
+    print("Press SHIFT+ALT+CTRL+C to exit.  Leave this window open!")
+    keyboard.wait('shift+alt+ctrl+c')
     server.stop()
 
 def winhotkey():
