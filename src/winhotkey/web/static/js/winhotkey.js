@@ -6,34 +6,38 @@ function activateDelayTypeButton(button_id) {
         index = $(`#${button_id}`).closest(".row").find(".index").val();
         get_params = {
             index:index,
-            delay:3.0
-        }
-        $.ajax({
-            type: "GET",
-            url: "/api/type_phrase",
-            dataType: "json",
-            data:get_params,
-            success: function (response) {
-                $.toast({ 
-                    text : "Your phrase will type when this toast closes.\nPut focus on the target input box", 
-                    showHideTransition : 'slide',  // It can be plain, fade or slide
-                    bgColor : 'red',              // Background color for toast
-                    textColor : '#eee',            // text color
-                    allowToastClose : false,       // Show the close button or not
-                    hideAfter : 3000,              // `false` to make it sticky or time in miliseconds to hide after
-                    // stack : 5,                     // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
-                    textAlign : 'center',            // Alignment of text i.e. left, right, center
-                    position : 'top-center'       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
-                  })
-                console.log(`${hotkey} sent for delayed typing.`)                                  
-                },
-            error: function( jqXHR, textStatus, errorThrown ) {
-                message = `delay type failed because ${errorThrown}`;
-                console.log(message);
+            delay:0.1
+        };
+        $.toast({ 
+            text : "Your phrase will type when this toast closes.\nPut focus on the target input box", 
+            showHideTransition : 'slide',  // It can be plain, fade or slide
+            bgColor : 'red',              // Background color for toast
+            textColor : '#eee',            // text color
+            allowToastClose : false,       // Show the close button or not
+            hideAfter : 3000,              // `false` to make it sticky or time in miliseconds to hide after
+            // stack : 5,                     // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
+            textAlign : 'center',            // Alignment of text i.e. left, right, center
+            position : 'top-center',       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
+            beforeHide: function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/type_phrase",
+                    dataType: "json",
+                    data:get_params,
+                    success: function (response) {
+                        //pass
+                        },
+                    error: function( jqXHR, textStatus, errorThrown ) {
+                        message = `delay type failed because ${errorThrown}`;
+                        console.log(message);
+                    }
+                })
+            },
+            afterHidden: function () {
+                $(`#${button_id}`).blur();
             }
-        });
-    }
-    );
+        })
+    })
 }
 
 function activateCopyButton(button_id) {
@@ -48,7 +52,7 @@ function activateCopyButton(button_id) {
             bgColor : 'blue',              // Background color for toast
             textColor : '#eee',            // text color
             allowToastClose : false,       // Show the close button or not
-            hideAfter : 2000,              // `false` to make it sticky or time in miliseconds to hide after
+            hideAfter : 1000,              // `false` to make it sticky or time in miliseconds to hide after
             // stack : 5,                     // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
             textAlign : 'left',            // Alignment of text i.e. left, right, center
             position : 'top-center'       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
@@ -82,7 +86,7 @@ function activateSaveButton (button_id) {
                     bgColor : 'green',              // Background color for toast
                     textColor : '#eee',            // text color
                     allowToastClose : false,       // Show the close button or not
-                    hideAfter : 2000,              // `false` to make it sticky or time in miliseconds to hide after
+                    hideAfter : 1000,              // `false` to make it sticky or time in miliseconds to hide after
                     // stack : 5,                     // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
                     textAlign : 'left',            // Alignment of text i.e. left, right, center
                     position : 'top-center'       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
