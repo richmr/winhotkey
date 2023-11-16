@@ -21,11 +21,13 @@
   <link rel="stylesheet" href="../css/normalize.css">
   <link rel="stylesheet" href="../css/skeleton.css">
   <link rel="stylesheet" href="../css/custom.css">
+  <link rel="stylesheet" href="../css/jquery.toast.min.css">
 
   <!-- Scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+  <script src="../js/jquery.toast.min.js"></script>
   <!-- <script src="https://kit.fontawesome.com/9a97c74805.js" crossorigin="anonymous"></script> -->
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -59,10 +61,11 @@
         <div id="all_hotkeys">
             <div id="index_1" class="row">
                 <div class="three columns">
-                    <input type="text" id="index_1_hkey" placeholder="Assigned keys" value="shift+ctrl+alt+0">
+                    <input type="hidden" id="index_1_index" class="index" value="1">
+                    <input type="text" id="index_1_hkey" class="hkey" placeholder="Assigned keys" value="shift+ctrl+alt+0">
                 </div>
                 <div class="three columns">
-                    <input type="text" id="index_1_phrase" placeholder="Phrase" value="password">
+                    <input type="text" id="index_1_phrase" class="phrase" placeholder="Phrase" value="password">
                 </div>
                 <div class="six columns">
                     <button id="index_1_dtype" class="button-primary">Delay Type</button>

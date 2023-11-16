@@ -7,7 +7,7 @@ from time import sleep
 
 shift_list = '~!@#$%^&*()_+{}|:"<>?QWERTYUIOPLKJHGFDSAZXCVBNM'
 
-def sender(phrase, delay=3.0):
+async def sender(phrase, delay=3.0):
     """
     Will type the phrase by breaking phrase into indiv characters and using keyboard.send()
     """
