@@ -10,7 +10,7 @@ else:
 from time import sleep
 from typing import Annotated, List
 import importlib
-import asyncio
+# import asyncio
 
 from winhotkey.keyboard_wrappers import sender
 
@@ -121,7 +121,7 @@ def type_phrase(index: int = Query(description="Index of assigned key to activat
     hkey = current_hotkeys.get(index, None)
     if hkey is not None:
         if len(hkey.phrase) > 0:
-            asyncio.run(sender(phrase=hkey.phrase, delay=delay))
+            sender(phrase=hkey.phrase, delay=delay)
     
     return {}
 
