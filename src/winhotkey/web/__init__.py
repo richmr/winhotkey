@@ -9,7 +9,7 @@ else:
     from winhotkey.dummy_keyboard import keyboard # For testing on non-windows systems
 from time import sleep
 from typing import Annotated, List
-import importlib
+from importlib import resources
 # import asyncio
 
 from winhotkey.keyboard_wrappers import sender
@@ -17,7 +17,7 @@ from winhotkey.keyboard_wrappers import sender
 api_app = FastAPI()
 
 static_path = None
-with importlib.resources.path('winhotkey', 'web') as web_path:
+with resources.path('winhotkey', 'web') as web_path:
     static_path = web_path/"static"
 
 api_app.mount(f"/static", StaticFiles(directory=static_path), name="static")
