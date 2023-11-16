@@ -57,7 +57,7 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     for (n, (key_to_add, phrase)) in enumerate(keys_to_add.items()):
         # Convert the phrase to string of characters separated by comma
         # keyboard.add_hotkey(key_to_add, keyboard.write, args=(phrase,))
-        keyboard.add_hotkey(key_to_add, sender, args=(phrase,3.0,))
+        keyboard.add_hotkey(key_to_add, sender, args=(phrase,1.0,))
     
     print("Press SHIFT+CTRL+ALT+ESC to exit.  Leave this window open!")
 
