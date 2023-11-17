@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2023-present richmr <richmr@users.noreply.github.com>
 #
 # SPDX-License-Identifier: MIT
+from enum import Enum
 import typer
 from typing_extensions import Annotated
 import platform
@@ -10,6 +11,7 @@ else:
     from winhotkey.dummy_keyboard import keyboard # For testing on non-windows systems
 from uvicorn.config import Config
 from time import sleep
+import logging
 
 from winhotkey.__about__ import __version__
 from winhotkey.ThreadedUvicorn import ThreadedUvicorn
@@ -48,18 +50,28 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     # Blocks until you press esc.
     keyboard.wait('shift+ctrl+alt+esc')
 
+class LogLevels(str, Enum):
+    CRITICAL = "critical"
+    ERROR = "error"
+    WARNING = "warning"
+    INFO = "info"
+    DEBUG = "debug"
+
 @cli_app.command()
 def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
-        type_delay: Annotated[float, typer.Option(help="Set the delay time in seconds when using the delayed typing feature")] = 2.0):
+        type_delay: Annotated[float, typer.Option(help="Set the delay time in seconds when using the delayed typing feature")] = 2.0,
+        logging_level: Annotated[LogLevels, typer.Option(help="Set the log level for the web server")] = LogLevels.WARNING.value):
     """
     Starts a web interface to configure winhotkey
     """
     from winhotkey.web import initializeSettings
     initializeSettings(hotkey_prefix, type_delay)
 
-    config = Config("winhotkey.web:api_app", host="127.0.0.1", port=17455, reload=True)
+    config = Config("winhotkey.web:api_app", host="127.0.0.1", port=17455, reload=True, log_level=logging_level.value)
     server = ThreadedUvicorn(config)
     server.start()
+    if logging_level not in [LogLevels.INFO, LogLevels.DEBUG]:
+        print("Access the GUI at: http://127.0.0.1:17455/")
     print("Press SHIFT+ALT+CTRL+C to exit.  Leave this window open!")
     keyboard.wait('shift+alt+ctrl+c')
     server.stop()
