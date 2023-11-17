@@ -2,37 +2,21 @@
 #
 # SPDX-License-Identifier: MIT
 import typer
-import keyboard
-#from winhotkey.dummy_keyboard import keyboard # For testing on mac
 from typing_extensions import Annotated
 import platform
+if platform.system() == "Windows":
+    import keyboard
+else:
+    from winhotkey.dummy_keyboard import keyboard # For testing on non-windows systems
 from uvicorn.config import Config
 from time import sleep
 
 from winhotkey.__about__ import __version__
 from winhotkey.ThreadedUvicorn import ThreadedUvicorn
+from winhotkey.keyboard_wrappers import sender
 
 cli_app = typer.Typer()
 
-shift_list = '~!@#$%^&*()_+{}|:"<>?QWERTYUIOPLKJHGFDSAZXCVBNM'
-
-def sender(phrase, delay=3.0):
-    """
-    Will type the phrase by breaking phrase into indiv characters and using keyboard.send()
-    """
-    sleep(delay)
-    for c in phrase:
-        if c in shift_list:
-            # Since using .send() I have to detect characters that are on the "shift" side of the key and send the shift with it
-            # Assumes caps lock is off
-            c = "shift+" + c.lower()
-        keyboard.send(c)
-
-def typePhrase(phrase:str):    
-    sleep(4)
-    for c in phrase:
-        print(f"Sending {c}")
-        keyboard.write(c)
 
 @cli_app.command()
 def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
@@ -64,7 +48,7 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     # Blocks until you press esc.
     keyboard.wait('shift+ctrl+alt+esc')
 
-#@cli_app.command()
+@cli_app.command()
 def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
         type_delay: Annotated[float, typer.Option(help="Set the delay time in seconds when using the delayed typing feature")] = 2.0):
     """
@@ -76,13 +60,12 @@ def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
     config = Config("winhotkey.web:api_app", host="127.0.0.1", port=17455, reload=True)
     server = ThreadedUvicorn(config)
     server.start()
-    print("Press SHIFT+CTRL+ALT+ESC to exit.  Leave this window open!")
-    keyboard.wait('shift+ctrl+alt+esc')
+    print("Press SHIFT+ALT+CTRL+C to exit.  Leave this window open!")
+    keyboard.wait('shift+alt+ctrl+c')
     server.stop()
 
 def winhotkey():
     if not platform.system() == "Windows":
-        print("This will only work on windows, sorry")
-        return
+        print("Winhotkey only fully works on Windows.  It will be started in a test mode.  No hotkeys will actually work.")
     cli_app()
 
