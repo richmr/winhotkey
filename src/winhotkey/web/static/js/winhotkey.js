@@ -41,10 +41,8 @@ function delayType(hotkey, index) {
                       });
                 }
             })
-        },
-        afterHidden: function () {
-            $(`#${button_id}`).blur();
         }
+        
     })
 }
 
