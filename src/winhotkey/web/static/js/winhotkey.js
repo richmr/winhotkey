@@ -151,7 +151,7 @@ function addHotkeyRow(hotkey) {
                 `<div class="six columns">` +
                     `<button id="${dtype_button_id}" class="button-primary">Delay Type</button> ` +
                     `<button id="${copy_button_id}" class="button-primary">Copy</button> `  +
-                    `<button id="${save_button_id}">Set Hotkey</button>` +
+                    `<button id="${save_button_id}" class="save_button">Set Hotkey</button>` +
                 `</div>` +
             `</div>`;    
     $("#all_hotkeys").append(toadd);
@@ -177,6 +177,9 @@ function loadHotkeys() {
             response.forEach((hotkey, index, array) => {
                 addHotkeyRow(hotkey);                                  
             });
+            console.log("loadkeys AJAX done");
+            // Has to be here due to Ajax returning before items set up
+            setUpInputBoxes();
         },
         error: function( jqXHR, textStatus, errorThrown ) {
             if (errorThrown.length == 0) {
@@ -196,21 +199,43 @@ function loadHotkeys() {
               });
         }
     });
+    
 }
 
+
 function setUpInputBoxes() {
-    $(".hkey").blur( function () {
-        // Simulate click of the save button
-        $(this).closest(".row").find(".save_button").click();
+    $(".hkey").each( function () {
+        // On "enter" save
+        $(this).on("keypress", function (event) {
+            if (event.key == "Enter") {
+                event.preventDefault();
+                // save the new key
+                $(this).closest(".row").find(".save_button").click();
+                // move to the associated phrase
+                $(this).closest(".row").find(".phrase").trigger("focus");
+            }
+        });
     });
-    $(".phrase").blur( function () {
-        $(this).closest(".row").find(".save_button").click();
+    $(".phrase").each( function () {
+        // keydown used here to capture "Tab"
+        $(this).on( "keydown", function (event) {
+            // If we tab out or enter, save and go to next.
+            // If we reverse tab, just go to the hkey entry (automatic)
+            if ((event.key == "Enter") || (!event.shiftKey && (event.key == "Tab"))) {
+                event.preventDefault();
+                // simulate save button click if there is actually data to save
+                currentPhrase = $(this).val()
+                if (currentPhrase.length > 0) {
+                    $(this).closest(".row").find(".save_button").click();
+                } 
+                // move to next phrase (by using row siblings)
+                $(this).closest(".row").next().find(".phrase").trigger("focus");
+            }
+            
+        });
     });
 }
 
 $(document).ready(function() {
-
-    loadHotkeys();
-    setUpInputBoxes();
-    
+    loadHotkeys();   
 })
