@@ -11,10 +11,12 @@ from time import sleep
 from typing import Annotated, List
 from importlib import resources
 # import asyncio
+import logging
 
 from winhotkey.keyboard_wrappers import sender
 
 api_app = FastAPI()
+logger = logging.getLogger(__name__)
 
 static_path = None
 with resources.path('winhotkey', 'web') as web_path:
@@ -122,6 +124,8 @@ def type_phrase(index: int = Query(description="Index of assigned key to activat
     if hkey is not None:
         if len(hkey.phrase) > 0:
             sender(phrase=hkey.phrase, delay=delay)
+        else:
+            logger.warning(f"No phrase to type for hot key {hkey.assigned_key}")
     
     return {}
 
