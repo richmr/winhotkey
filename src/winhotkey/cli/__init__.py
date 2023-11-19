@@ -25,7 +25,7 @@ def cli(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible h
         reverse_hotkey_order: Annotated[bool, typer.Option(help="Start with 1 and go to 0 or 0 and go to 1.  I actually prefer 0 to 1")] = True,
         hide_input: Annotated[bool, typer.Option(help="In case your 'phrases' are sensitive, you will not see what you enter")] = True):
     """
-    Allows you store up to 10 'phrases' for instant recall by typing 'Control+Alt+[1-0]'\n
+    Allows you store up to 10 'phrases' for instant recall by typing 'Shift+Ctrl+Alt[1-0]'\n
     Just hit enter to stop storing 'phrases'\n
     """
     possible_entries = [f"{i}" for i in range(1,10)]
