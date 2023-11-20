@@ -66,6 +66,8 @@ You can also use the original CLI verson if interested.  But it has way less fea
 ### Limitations
 Greatest limitation is it only works on Windows.  The security models on OS X and linux prevent it from working well.  It will start up in a test mode and simulate responses if you run on anything but Windows.
 
+I believe it is possible to run this in linux if "sudo" it.  Making that choice is up to you.  The OS check will stil fail, so if you want to run it on linux, you will need to edit the CLI code.
+
 It's entirely possible other programs you have running will block the hot key hooks, which is why the "Delay Type" option exists as described above.
 
 ### Security
