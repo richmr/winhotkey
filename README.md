@@ -45,21 +45,21 @@ This will install the executable script in your path.  If this is the first time
 
 Start up the GUI:
 
-![Open a terminal and run "winhotkey web".  Then go to indicated URL](src/winhotkey/documentation/starting_gui.gif)
+![Open a terminal and run "winhotkey web".  Then go to indicated URL](https://github.com/richmr/winhotkey/blob/b3611ce718b7da1268e5f9a894eac19c3fcdc713/src/winhotkey/documentation/starting_gui.gif)
 
 Add some phrases:
 
-![Simply type in the phrase input boxes and hit ENTER or TAB](src/winhotkey/documentation/setting_hotkeys.gif)
+![Simply type in the phrase input boxes and hit ENTER or TAB](https://github.com/richmr/winhotkey/blob/b3611ce718b7da1268e5f9a894eac19c3fcdc713/src/winhotkey/documentation/setting_hotkeys.gif)
 
 You can also change the assigned keys. Keys must match those used by the [keyboard](https://pypi.org/project/keyboard/) module.  Clicking "Set Hotkey" will enable the new keys.
 
 Now there are several ways to use the tools:
 
-![You can use the hotkeys at any time to type the phrase.  You can use 'Copy' and then paste in the traditional manner.  Delay Type can be used if you hotkeys and copy paste are not working.](src/winhotkey/documentation/full_demo.gif)
+![You can use the hotkeys at any time to type the phrase.  You can use 'Copy' and then paste in the traditional manner.  Delay Type can be used if you hotkeys and copy paste are not working.](https://github.com/richmr/winhotkey/blob/b3611ce718b7da1268e5f9a894eac19c3fcdc713/src/winhotkey/documentation/full_demo.gif)
 
 You can also use the original CLI verson if interested.  But it has way less features and you can't change keys once its running.:
 
-![Using the CLI verson](src/winhotkey/documentation/cli_demo.gif)
+![Using the CLI verson](https://github.com/richmr/winhotkey/blob/b3611ce718b7da1268e5f9a894eac19c3fcdc713/src/winhotkey/documentation/cli_demo.gif)
 
 ## Notes
 
