@@ -90,7 +90,7 @@ def set_hotkey(hot_key: HotKey):
             print(f"Couldn't remove {existing_hotkey.assigned_key} because {badnews}")
 
     # attach to hot keys
-    keyboard.add_hotkey(hot_key.assigned_key, sender, args=(hot_key.phrase, 0.5, ))
+    keyboard.add_hotkey(hot_key.assigned_key, sender, args=(hot_key.phrase, 0.1, ))
     # Store in Dict
     current_hotkeys[hot_key.index] = hot_key
     
