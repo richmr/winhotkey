@@ -12,6 +12,9 @@ else:
 from uvicorn.config import Config
 from time import sleep
 import logging
+from pathlib import Path
+from tomlkit import TOMLDocument, table, comment
+from tomlkit.toml_file import TOMLFile
 
 from winhotkey.__about__ import __version__
 from winhotkey.ThreadedUvicorn import ThreadedUvicorn
@@ -57,15 +60,32 @@ class LogLevels(str, Enum):
     INFO = "info"
     DEBUG = "debug"
 
+def parseConfig(config_file_path:Path) -> TOMLDocument:
+    if config_file_path.exists():
+        config = TOMLFile(config_file_path).read()
+        return config
+    else:
+        # Lets make a blank
+        new_config = TOMLDocument()
+        presets = table()
+        presets.add(comment("You can place preset keys in here, they will show up in the order you place them."))
+        presets.add(comment("You REALLY shouldn't put secret phrases here, they are not protected"))
+        presets.add("phrases", ["" for i in range(10)])
+        new_config["presets"] = presets
+        TOMLFile(config_file_path).write(new_config)
+        return new_config
+
 @cli_app.command()
 def web(hotkey_prefix: Annotated[str, typer.Option(help="'keyboard' compatible hot key prefix'")] = "shift+ctrl+alt",
         type_delay: Annotated[float, typer.Option(help="Set the delay time in seconds when using the delayed typing feature")] = 2.0,
-        logging_level: Annotated[LogLevels, typer.Option(help="Set the log level for the web server")] = LogLevels.WARNING.value):
+        logging_level: Annotated[LogLevels, typer.Option(help="Set the log level for the web server")] = LogLevels.WARNING.value,
+        config: Annotated[Path, typer.Option(help="Location for configuration file")] = Path.home()/"winhotkey.toml"):
     """
-    Starts a web interface to configure winhotkey
+    Starts a web interface to configure winhotkey.  If no config file is found, will create a template at the indicated location
     """
     from winhotkey.web import initializeSettings
-    initializeSettings(hotkey_prefix, type_delay)
+    config_data = parseConfig(config)
+    initializeSettings(hotkey_prefix, type_delay, config_data["presets"]["phrases"])
 
     config = Config("winhotkey.web:api_app", host="127.0.0.1", port=17455, reload=True, log_level=logging_level.value)
     server = ThreadedUvicorn(config)

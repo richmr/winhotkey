@@ -25,7 +25,8 @@ dependencies = [
   "keyboard",
   "fastapi",
   "uvicorn[standard]",
-  "pydantic"
+  "pydantic",
+  "tomlkit"
 ]
 
 [project.urls]
