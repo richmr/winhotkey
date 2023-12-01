@@ -103,23 +103,6 @@ def set_hotkey(hot_key: HotKey):
     
     return {}
 
-
-@api_app.post("/api/hotkeys")
-def set_hotkey(hot_key: HotKey):
-    """
-    Will assign (or reassign) hot key
-    """
-    # Check for key already assigned
-    phrase = current_hotkeys.get(hot_key.assigned_key, None)
-    if phrase is not None:
-        # unassign
-        keyboard.remove_hotkey(hot_key.assigned_key)
-        
-    # Assign hotkey
-    keyboard.add_hotkey(hot_key.assigned_key, sender, args=(hot_key.phrase, 0.5, ))
-    current_hotkeys[hot_key.assigned_key] = hot_key
-    return {}
-
 @api_app.get("/api/type_phrase")
 def type_phrase(index: int = Query(description="Index of assigned key to activate"), 
                 delay:float = Query(default=type_delay, description="The time in seconds we will wait before we begin typing")
