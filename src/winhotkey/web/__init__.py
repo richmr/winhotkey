@@ -33,7 +33,8 @@ current_hotkeys = {}
 type_delay = 2.0
 def initializeSettings(
         hotkey_prefix,
-        delay_in_seconds
+        delay_in_seconds,
+        preset_phrases: list = None
     ):
     global current_hotkeys
     global type_delay
@@ -42,7 +43,13 @@ def initializeSettings(
     possible_entries = possible_entries[::-1]
     for index, num in enumerate(possible_entries):
         hkey = f"{hotkey_prefix}+{num}"
-        current_hotkeys[index] = HotKey(index=index, assigned_key=hkey, phrase="")
+        phrase = ""
+        hkey = HotKey(index=index, assigned_key=hkey, phrase=phrase)
+        if preset_phrases is not None:
+            phrase = preset_phrases[index]
+            if len(phrase) > 0:
+                hkey.phrase = phrase
+        set_hotkey(hkey)
     
     type_delay = delay_in_seconds
 
@@ -90,27 +97,10 @@ def set_hotkey(hot_key: HotKey):
             print(f"Couldn't remove {existing_hotkey.assigned_key} because {badnews}")
 
     # attach to hot keys
-    keyboard.add_hotkey(hot_key.assigned_key, sender, args=(hot_key.phrase, 0.1, ))
+    keyboard.add_hotkey(hot_key.assigned_key, sender, args=(hot_key.phrase, 0.2, ))
     # Store in Dict
     current_hotkeys[hot_key.index] = hot_key
     
-    return {}
-
-
-@api_app.post("/api/hotkeys")
-def set_hotkey(hot_key: HotKey):
-    """
-    Will assign (or reassign) hot key
-    """
-    # Check for key already assigned
-    phrase = current_hotkeys.get(hot_key.assigned_key, None)
-    if phrase is not None:
-        # unassign
-        keyboard.remove_hotkey(hot_key.assigned_key)
-        
-    # Assign hotkey
-    keyboard.add_hotkey(hot_key.assigned_key, sender, args=(hot_key.phrase, 0.5, ))
-    current_hotkeys[hot_key.assigned_key] = hot_key
     return {}
 
 @api_app.get("/api/type_phrase")

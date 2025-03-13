@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- This is a fully standalone password helper.  It only provides copy and paste, no hot keys or delay typing -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Winhotkey (standalone)</title>
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/skeleton.css">
+  <link rel="stylesheet" href="../css/custom.css">
+  <link rel="stylesheet" href="../css/jquery.toast.min.css">
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+  <script src="../js/jquery.toast.min.js"></script>
+  <!-- <script src="https://kit.fontawesome.com/9a97c74805.js" crossorigin="anonymous"></script> -->
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
+
+  <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <h3 class="text-center">Your Accounts</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <h4 class="text-left">Account</h4>
+            </div>
+            <div class="four columns">
+                <h4 class="text-left">Phrase</h4>
+            </div>
+            <div class="four columns">
+                <h4 class="text-left">Controls</h4>
+            </div>
+        </div>
+        <div id="all_hotkeys">
+            <div id="index_1" class="row">
+                <div class="four columns">
+                    <input type="hidden" id="index_1_index" class="index" value="1">
+                    <input type="text" id="index_1_hkey" class="hkey" placeholder="Account">
+                </div>
+                <div class="four columns">
+                    <input type="text" id="index_1_phrase" class="phrase" placeholder="Phrase" value="password">
+                </div>
+                <div class="four columns">
+                    <button id="index_1_copy" class="button-primary">Copy</button>
+                    <button id="index_1_save" class="save_button">Save</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="../js/winhotkey_standalone.js"></script>
+    
+</body>
